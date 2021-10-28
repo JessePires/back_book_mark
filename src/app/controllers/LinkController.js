@@ -10,9 +10,11 @@ import BookMark from '../models/BookMark';
 class LinkController {
   async store (req, res) {
     try {
+      const regex = /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+
       const schema = Yup.object().shape({
         id_book_mark: Yup.string().required(),
-        url: Yup.string().required(),
+        url: Yup.string().matches(regex).required(),
       });
 
       if (!(await schema.isValid(req.body))) {
@@ -45,6 +47,7 @@ class LinkController {
         link,
       });
     } catch(error) {
+      console.log(error);
       return res.status(500).json(error);
     }
 
