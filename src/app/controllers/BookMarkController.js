@@ -24,9 +24,12 @@ class BookMarkController {
         },
       });
 
-      return res.status(200).json({
-        bookMark,
-      });
+      const returnedData = {
+        bookmark: bookMark[0],
+        isCreated: bookMark[1]
+      }
+
+      return res.status(200).json(returnedData);
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);

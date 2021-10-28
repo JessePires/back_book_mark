@@ -29,6 +29,8 @@ class LinkController {
       // OBTENDO INFORMAÇÕES DO SITE
       const { url } = req.body;
 
+
+      console.log("obtendo url");
       const { 
         title,
         description, 
@@ -43,9 +45,7 @@ class LinkController {
         id_book_mark,
       });
 
-      return res.status(200).json({
-        link,
-      });
+      return res.status(200).json(link);
     } catch(error) {
       console.log(error);
       return res.status(500).json(error);
@@ -55,19 +55,49 @@ class LinkController {
 
   async show (req, res) {
     try {
+      
+      const schema = Yup.object().shape({
+        id: Yup.string().required()
+      });
+      
+      if (!(await schema.isValid(req.params))) {
+        return res.status(400).json({ error: "Validation Fail!" });
+      }
+
       const { id } = req.params;
-  
+      
       const links = await Link.findAll({
         where: {
           id_book_mark: id,
         },
       });
   
-      return res.status(200).json({
-        links
-      });
+      return res.status(200).json(links);
     } catch (error) {
-      console.status(500).json(error);
+      return res.status(500).json(error);
+    }
+  }
+
+  async destroy(req, res){
+    try {
+      
+      const schema = Yup.object().shape({
+        id: Yup.number().required()
+      });
+      
+      if (!(await schema.isValid(req.params))) {
+        return res.status(400).json({ error: "Validation Fail!" });
+      }
+      
+      const { id } = req.params;
+      const link = await Link.findByPk(id);
+
+      link.destroy();
+  
+      return res.status(200).json(link);
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error);
     }
   }
 }
