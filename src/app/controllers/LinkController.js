@@ -36,7 +36,8 @@ class LinkController {
         description, 
         image,
       } = await getURL(url);
-      
+      console.log("finalizou");
+
       const link = await Link.create({
         url,
         name: title,
