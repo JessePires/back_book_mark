@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "nodemon src/server",
-    "start:prod": "sucrase-node src/server.js",
+    "start": "sucrase-node src/server.js",
     "dev:debug": "nodemon --inspect src/server"
   },
   "dependencies": {
