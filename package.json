@@ -8,7 +8,8 @@
   "scripts": {
     "start:dev": "nodemon src/server",
     "start": "sucrase-node src/server.js",
-    "dev:debug": "nodemon --inspect src/server"
+    "dev:debug": "nodemon --inspect src/server",
+    "build": "sequelize db:migrate --env production"
   },
   "dependencies": {
     "axios": "^0.24.0",
